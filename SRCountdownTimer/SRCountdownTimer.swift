@@ -55,21 +55,7 @@ public class SRCountdownTimer: UIView {
     private var interval: TimeInterval = 1 // Interval which is set by a user
     private let fireInterval: TimeInterval = 0.01 // ~60 FPS
 
-    public lazy var counterLabel: UILabel = {
-        let label = UILabel()
-        self.addSubview(label)
-
-        label.textAlignment = .center
-        label.frame = self.bounds
-        if let font = self.labelFont {
-            label.font = font
-        }
-        if let color = self.labelTextColor {
-            label.textColor = color
-        }
-
-        return label
-    }()
+    public lazy var counterLabel: UILabel = UILabel()
     private var currentCounterValue: Int = 0 {
         didSet {
             if !isLabelHidden {
@@ -95,7 +81,20 @@ public class SRCountdownTimer: UIView {
         }
 
         super.init(frame: frame)
-
+        self.addSubview(self.counterLabel)
+        counterLabel.frame = .zero
+        counterLabel.textAlignment = .center
+        if let font = self.labelFont {
+            counterLabel.font = font
+        }
+        if let color = self.labelTextColor {
+            counterLabel.textColor = color
+        }
+        counterLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            counterLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            counterLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+        ])
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -233,4 +232,5 @@ public class SRCountdownTimer: UIView {
         layer.cornerRadius = frame.width / 2
         clipsToBounds = true
     }
+    
 }
