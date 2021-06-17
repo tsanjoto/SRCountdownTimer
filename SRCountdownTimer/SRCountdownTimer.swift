@@ -55,7 +55,7 @@ public class SRCountdownTimer: UIView {
     private var interval: TimeInterval = 1 // Interval which is set by a user
     private let fireInterval: TimeInterval = 0.01 // ~60 FPS
 
-    private lazy var counterLabel: UILabel = {
+    public lazy var counterLabel: UILabel = {
         let label = UILabel()
         self.addSubview(label)
 
@@ -96,8 +96,6 @@ public class SRCountdownTimer: UIView {
 
         super.init(frame: frame)
 
-        layer.cornerRadius = frame.width / 2
-        clipsToBounds = true
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -228,5 +226,11 @@ public class SRCountdownTimer: UIView {
         } else {
             end()
         }
+    }
+    
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.cornerRadius = frame.width / 2
+        clipsToBounds = true
     }
 }
